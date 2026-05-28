@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vikas Jain — Senior Cloud Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ──────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg:         #0A0D14;
+  --bg2:        #0E1219;
+  --bg3:        #13182B;
+  --surface:    #151C2E;
+  --surface2:   #1C2540;
+  --border:     rgba(255,255,255,0.07);
+  --border2:    rgba(255,255,255,0.13);
+  --amber:      #F59E0B;
+  --amber2:     #FBBF24;
+  --amber-dim:  rgba(245,158,11,0.12);
+  --amber-glow: rgba(245,158,11,0.25);
+  --blue:       #3B82F6;
+  --blue-dim:   rgba(59,130,246,0.12);
+  --teal:       #14B8A6;
+  --teal-dim:   rgba(20,184,166,0.12);
+  --red:        #EF4444;
+  --green:      #22C55E;
+  --text:       #E8EDF5;
+  --text2:      #9BA8C0;
+  --text3:      #5B6A8A;
+  --mono:       'JetBrains Mono', monospace;
+  --serif:      'Playfair Display', Georgia, serif;
+  --sans:       'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+
+/* ── Noise texture overlay ─────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Grid lines ────────────────────────────────────────────────────── */
+.grid-lines {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ── NAV ───────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(10,13,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+}
+.nav-logo span { color: var(--text3); }
+.nav-links { display: flex; gap: 36px; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  padding: 8px 18px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+  transition: background .2s, color .2s;
+}
+.nav-cta:hover { background: var(--amber); color: var(--bg); }
+
+/* ── HERO ──────────────────────────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 48px 80px;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+.hero-glow2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
+  bottom: 0; left: 200px;
+  pointer-events: none;
+}
+.hero-content { max-width: 780px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeUp .6s ease forwards .1s;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 40px; height: 1px;
+  background: var(--amber);
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(52px, 7vw, 86px);
+  line-height: 1.0;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+  opacity: 0; animation: fadeUp .7s ease forwards .2s;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 34px);
+  color: var(--amber);
+  font-weight: 700;
+  margin-bottom: 32px;
+  opacity: 0; animation: fadeUp .7s ease forwards .3s;
+}
+.hero-desc {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.75;
+  max-width: 600px;
+  margin-bottom: 48px;
+  opacity: 0; animation: fadeUp .7s ease forwards .4s;
+}
+.hero-desc strong { color: var(--text); }
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .7s ease forwards .5s;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--amber);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 14px 28px;
+  border-radius: 3px;
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245,158,11,0.35);
+}
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  padding: 14px 28px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  transition: border-color .2s, color .2s;
+}
+.btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── STATS BAR ─────────────────────────────────────────────────────── */
+.stats-bar {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.stat-item {
+  padding: 36px 32px;
+  border-right: 1px solid var(--border);
+  opacity: 0; animation: fadeUp .6s ease forwards;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:nth-child(1) { animation-delay: .1s; }
+.stat-item:nth-child(2) { animation-delay: .2s; }
+.stat-item:nth-child(3) { animation-delay: .3s; }
+.stat-item:nth-child(4) { animation-delay: .4s; }
+.stat-item:nth-child(5) { animation-delay: .5s; }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── SECTION WRAPPER ───────────────────────────────────────────────── */
+section { position: relative; z-index: 1; }
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: block; width: 30px; height: 1px;
+  background: var(--amber);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--text2);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 60px;
+}
+
+/* ── ENGAGEMENTS TIMELINE ──────────────────────────────────────────── */
+#engagements { background: var(--bg2); }
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.timeline-item {
+  display: grid; grid-template-columns: 200px 1fr;
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+  gap: 48px;
+  transition: background .2s;
+}
+.timeline-item:last-child { border-bottom: 1px solid var(--border); }
+.timeline-item:hover { background: rgba(245,158,11,0.03); }
+.tl-left { padding-top: 4px; }
+.tl-period {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.tl-client {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 300;
+}
+.tl-right {}
+.tl-role {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.tl-company {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.tl-desc {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 680px;
+}
+.tl-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--border2);
+  color: var(--text3);
+  transition: border-color .2s, color .2s;
+}
+.tag:hover { border-color: var(--amber); color: var(--amber); }
+.tag.amber { border-color: var(--amber-glow); color: var(--amber); background: var(--amber-dim); }
+
+/* ── PROJECTS GRID ─────────────────────────────────────────────────── */
+#projects {}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.project-card {
+  background: var(--bg);
+  padding: 40px;
+  display: flex; flex-direction: column;
+  gap: 24px;
+  transition: background .3s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+.project-card:hover { background: var(--surface); }
+.project-card:hover::before { transform: scaleX(1); }
+
+.project-card.large {
+  grid-column: span 2;
+}
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.card-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+.card-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge-aws { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-glow); }
+.badge-tf  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(59,130,246,0.3); }
+.badge-k8s { background: var(--teal-dim);  color: var(--teal);  border: 1px solid rgba(20,184,166,0.3); }
+.badge-sec { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.badge-dr  { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+
+.card-icon {
+  font-size: 36px;
+  line-height: 1;
+}
+.card-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+.card-desc {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.7;
+  flex: 1;
+}
+.card-meta {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.card-metric {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+.card-metric::before {
+  content: '';
+  display: block; width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+}
+.card-services {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-top: 16px;
+}
+.svc-chip {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+.card-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: gap .2s;
+}
+.card-link:hover { gap: 10px; }
+
+/* ── CERTIFICATIONS ─────────────────────────────────────────────────── */
+#certs { background: var(--bg2); }
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px 20px;
+  text-align: center;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.cert-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--amber);
+  box-shadow: 0 8px 30px rgba(245,158,11,0.15);
+}
+.cert-level {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cert-level.prof { color: var(--amber); }
+.cert-level.spec { color: var(--blue); }
+.cert-level.asso { color: var(--teal); }
+.cert-level.other { color: var(--text3); }
+.cert-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.cert-issuer {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+
+/* ── SKILLS ─────────────────────────────────────────────────────────── */
+#skills {}
+.skills-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.skill-group { margin-bottom: 36px; }
+.skill-group-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.skill-row {
+  display: flex; align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.skill-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  width: 200px;
+  flex-shrink: 0;
+}
+.skill-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--border2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber), var(--amber2));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: barFill 1s ease forwards;
+}
+@keyframes barFill {
+  to { transform: scaleX(1); }
+}
+.skill-pct {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  width: 32px;
+  text-align: right;
+}
+
+/* ── CONTACT ─────────────────────────────────────────────────────────── */
+#contact {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.contact-left .section-title { margin-bottom: 24px; }
+.contact-left p {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+.contact-links { display: flex; flex-direction: column; gap: 16px; }
+.contact-link {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color .2s, background .2s;
+}
+.contact-link:hover {
+  border-color: var(--amber);
+  background: var(--amber-dim);
+}
+.cl-icon {
+  font-size: 20px;
+  width: 28px; text-align: center;
+}
+.cl-info {}
+.cl-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.cl-value {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+.contact-right {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+}
+.contact-right h3 {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.contact-right p {
+  font-size: 14px; color: var(--text2);
+  margin-bottom: 28px; line-height: 1.6;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--amber); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+
+/* ── FOOTER ─────────────────────────────────────────────────────────── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 32px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+}
+.footer-left span { color: var(--amber); }
+.footer-right {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 24px 60px; }
+  .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  .stat-item:nth-child(4),
+  .stat-item:nth-child(5) { border-top: 1px solid var(--border); }
+  .section-inner { padding: 60px 24px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 16px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.large { grid-column: span 1; }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+  .skills-layout { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo"><span>// </span>vikas-awspro</div>
+  <div class="nav-links">
+    <a href="#engagements">Engagements</a>
+    <a href="#projects">Projects</a>
+    <a href="#certs">Certifications</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="https://linkedin.com/in/vjain80" target="_blank">LinkedIn →</a>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────────── -->
+<div class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Senior Cloud Architect · AWS ProServe Partner</div>
+    <h1 class="hero-name">Vikas<br>Jain</h1>
+    <div class="hero-title">AWS Migration Specialist</div>
+    <p class="hero-desc">
+      <strong>19+ years of IT experience</strong> — 7 years of deep, hands-on AWS expertise.
+      Embedded AWS Professional Services partner delivering <strong>large-scale cloud migrations</strong>,
+      infrastructure automation, and cloud-native platform design for enterprise clients across
+      banking, aviation, and manufacturing.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#projects">View Projects →</a>
+      <a class="btn-secondary" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS BAR ──────────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="1000">0</div>
+    <div class="stat-label">Servers migrated to AWS</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="100">0</div>
+    <div class="stat-label">Databases migrated</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="200">0</div>
+    <div class="stat-label">Security vulnerabilities remediated</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="10">0</div>
+    <div class="stat-label">AWS &amp; cloud certifications</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">2.5<span style="font-size:24px;color:var(--text3)">yr</span></div>
+    <div class="stat-label">Embedded AWS ProServe partner</div>
+  </div>
+</div>
+
+<!-- ── ENGAGEMENTS ────────────────────────────────────────────────── -->
+<section id="engagements">
+  <div class="section-inner">
+    <div class="section-label">Career timeline</div>
+    <h2 class="section-title">Enterprise<br>Engagements</h2>
+    <p class="section-sub">Key client programmes delivered across migration, platform engineering, and cloud architecture roles.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="tl-left">
+          <div class="tl-period">Oct 2023 – Apr 2026</div>
+          <div class="tl-client">Cognizant / AWS ProServe</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-role">Senior Cloud Architect</div>
+          <div class="tl-company">AWS Professional Services — Integrated Partner Delivery</div>
+          <p class="tl-desc">Embedded within the AWS ProServe team delivering cloud migration programmes for multiple enterprise AWS clients. Led 1,000+ server, 100+ database, and terabytes of file-share migration in under 9 months. Built reusable Terraform modules consumed by multiple product teams. Delivered across platform, foundation, and migration streams.</p>
+          <div class="tl-tags">
+            <span class="tag amber">AWS ProServe</span>
+            <span class="tag">MGN</span><span class="tag">DMS</span><span class="tag">DataSync</span>
+            <span class="tag">CMF</span><span class="tag">Terraform</span><span class="tag">Landing Zone</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-left">
+          <div class="tl-period">Oct 2022 – Sep 2023</div>
+          <div class="tl-client">IBM India</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-role">Cloud Architect</div>
+          <div class="tl-company">Client: Philip Morris International</div>
+          <p class="tl-desc">Refactoring migration of legacy on-premise PLM application to AWS using ARAS Innovator. Designed scalable, secure AWS infrastructure. Conducted Well-Architected Framework review across Security, Reliability, Performance, and Cost pillars. Remediated 200+ security vulnerabilities ensuring secure phased cutover.</p>
+          <div class="tl-tags">
+            <span class="tag amber">WAF Review</span>
+            <span class="tag">PLM Refactor</span><span class="tag">ARAS Innovator</span>
+            <span class="tag">Security Hub</span><span class="tag">Cost Optimisation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-left">
+          <div class="tl-period">2021 – 2022</div>
+          <div class="tl-client">Tata Consultancy Services</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-role">Cloud Engineer — Migration Stream Lead</div>
+          <div class="tl-company">Client: British Airways</div>
+          <p class="tl-desc">Owned the most critical Airline Operations vertical (50+ applications, 600+ servers) covering flight ops, crew management, and aircraft maintenance migration to AWS. Led application discovery, defined 6R migration strategies, provisioned infrastructure using Terraform and GitHub Actions CI/CD.</p>
+          <div class="tl-tags">
+            <span class="tag amber">Migration Lead</span>
+            <span class="tag">Terraform</span><span class="tag">Ansible</span>
+            <span class="tag">GitHub Actions</span><span class="tag">600+ Servers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="tl-left">
+          <div class="tl-period">Oct 2019 – 2021</div>
+          <div class="tl-client">Tata Consultancy Services</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-role">Cloud Engineer — Platform Stream</div>
+          <div class="tl-company">Client: BMO (Bank of Montreal)</div>
+          <p class="tl-desc">Led platform services stream for full data centre to AWS migration. Responsible for migration of IBM MQ, IIB, and WebSphere Application Server platforms. Automated infrastructure provisioning with CloudFormation, software configuration with Ansible. Led cross-functional team of cloud engineers, DevSecOps, and application SMEs.</p>
+          <div class="tl-tags">
+            <span class="tag amber">IBM MQ</span>
+            <span class="tag">IIB</span><span class="tag">WAS</span>
+            <span class="tag">CloudFormation</span><span class="tag">Ansible</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ───────────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Showcase<br>Projects</h2>
+    <p class="section-sub">Eight production-grade projects demonstrating AWS architecture, IaC, security, and migration engineering — each with full documentation, architecture diagrams, and working code.</p>
+
+    <div class="projects-grid">
+
+      <!-- P1 — Landing Zone -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">01</span>
+          <span class="card-badge badge-tf">Terraform</span>
+        </div>
+        <div class="card-icon">🏗️</div>
+        <div class="card-title">AWS Landing Zone with CI/CD Deployment Pipeline</div>
+        <div class="card-desc">Production-grade AWS Landing Zone deployed via GitHub Actions CI/CD. Multi-account structure, SCP guardrails, centralised logging, network segmentation — mirrors the foundation stream patterns built during AWS ProServe engagements.</div>
+        <div class="card-meta">
+          <div class="card-metric">Account Factory + StackSets automation</div>
+          <div class="card-metric">GitHub Actions plan → apply pipeline</div>
+          <div class="card-metric">CIS benchmark conformance pack</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">Control Tower</span>
+          <span class="svc-chip">AWS Config</span>
+          <span class="svc-chip">Security Hub</span>
+          <span class="svc-chip">Terraform</span>
+          <span class="svc-chip">GitHub Actions</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P2 — Terraform Module Library -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">02</span>
+          <span class="card-badge badge-tf">Terraform</span>
+        </div>
+        <div class="card-icon">📦</div>
+        <div class="card-title">Reusable Terraform AWS Module Library</div>
+        <div class="card-desc">Registry-style Terraform module library following the primitive-and-composite pattern. Primitive modules (EC2, ASG, ALB, Route 53, IAM, SG) assembled into composite workload stacks. Full Terratest coverage and semantic versioning. Mirrors the reusable modules built for product teams at AWS ProServe.</div>
+        <div class="card-meta">
+          <div class="card-metric">6 primitive + 2 composite modules</div>
+          <div class="card-metric">Terratest integration test suite</div>
+          <div class="card-metric">Input validation + semantic versioning</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">EC2</span><span class="svc-chip">ASG</span>
+          <span class="svc-chip">ALB</span><span class="svc-chip">Route 53</span>
+          <span class="svc-chip">IAM</span><span class="svc-chip">Terratest</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P3 — MGN Wave Orchestrator -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">03</span>
+          <span class="card-badge badge-aws">AWS MGN</span>
+        </div>
+        <div class="card-icon">🖥️</div>
+        <div class="card-title">AWS MGN Automated Wave Orchestrator</div>
+        <div class="card-desc">Python/Lambda solution that reads a migration wave plan (CSV), triggers MGN replication, monitors server status, runs pre/post cutover validations, and sends SNS notifications. Simulates the CMF-driven workflow executed at scale — 1,000+ servers migrated in under 9 months.</div>
+        <div class="card-meta">
+          <div class="card-metric">Wave plan ingestion from CSV/S3</div>
+          <div class="card-metric">Automated pre/post cutover validation</div>
+          <div class="card-metric">EventBridge + SNS notification pipeline</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">MGN</span><span class="svc-chip">Lambda</span>
+          <span class="svc-chip">EventBridge</span><span class="svc-chip">SNS</span>
+          <span class="svc-chip">Python</span><span class="svc-chip">CMF</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P4 — Security Auto-Remediation — LARGE -->
+      <div class="project-card large reveal">
+        <div class="card-header">
+          <span class="card-num">04</span>
+          <span class="card-badge badge-sec">Security</span>
+        </div>
+        <div class="card-icon">🛡️</div>
+        <div class="card-title">AWS Security Posture Auto-Remediation System</div>
+        <div class="card-desc">AWS Config rules + Lambda auto-remediation for 40 CIS AWS Benchmark v1.4 findings across 8 services (EC2, EBS, S3, ALB, RDS, Route 53, VPC, IAM). CloudWatch dashboard with posture score trending over time. Reflects 200+ vulnerability remediations executed at Philip Morris International. Each Lambda follows a detect → remediate → re-evaluate → audit → alert pattern. Fully automated for CRITICAL findings; SNS escalation for findings requiring human review.</div>
+        <div class="card-meta">
+          <div class="card-metric">40 CIS v1.4 rules across 8 AWS services</div>
+          <div class="card-metric">29 auto-remediation Lambdas + DLQ + DynamoDB audit log</div>
+          <div class="card-metric">Posture score dashboard — p95 remediation latency ≤ 5 min</div>
+          <div class="card-metric">Based on 200+ real remediations at PMI (IBM India engagement)</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">AWS Config</span><span class="svc-chip">Lambda</span>
+          <span class="svc-chip">Security Hub</span><span class="svc-chip">EventBridge</span>
+          <span class="svc-chip">CloudWatch</span><span class="svc-chip">SNS</span>
+          <span class="svc-chip">DynamoDB</span><span class="svc-chip">Terraform</span>
+          <span class="svc-chip">Python</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P5 — DMS Pipeline -->
+      <div class="project-card reveal" id="dms-project" style="border:1px solid rgba(245,158,11,0.35);">
+        <div class="card-header">
+          <span class="card-num">05</span>
+          <div style="display:flex;gap:8px;align-items:center;"><span class="card-badge badge-aws">AWS DMS</span><span style="font-family:var(--mono);font-size:9px;background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.4);padding:2px 8px;border-radius:10px;letter-spacing:.08em;">● LIVE REPO</span></div>
+        </div>
+        <div class="card-icon">🗄️</div>
+        <div class="card-title">Database Migration Pipeline — Oracle & MySQL to Aurora</div>
+        <div class="card-desc">End-to-end DMS pipeline: Terraform-provisioned replication instance, SCT schema conversion (Oracle → Aurora PostgreSQL), ongoing CDC replication with sub-30s lag, validation suite, and cutover runbook. Demo dataset included — full flow runnable from scratch in under 4 hours.</div>
+        <div class="card-meta">
+          <div class="card-metric">2.8TB Oracle + 420GB MySQL migrated</div>
+          <div class="card-metric">Zero data loss — full validation suite</div>
+          <div class="card-metric">Cutover runbook: Excel tracker + diagram</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">DMS</span><span class="svc-chip">SCT</span>
+          <span class="svc-chip">Aurora PG</span><span class="svc-chip">Aurora MySQL</span>
+          <span class="svc-chip">Terraform</span><span class="svc-chip">CloudWatch</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro/enterprise-db-migration-aws" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P6 — DR Architecture -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">06</span>
+          <span class="card-badge badge-dr">Disaster Recovery</span>
+        </div>
+        <div class="card-icon">🔁</div>
+        <div class="card-title">Cloud-Native Disaster Recovery — Tier 1 & Tier 2</div>
+        <div class="card-desc">Warm standby (RTO 15 min, RPO 1 min) for Tier 1 apps using Aurora Global DB, AWS DRS, ECS Fargate warm standby, Route 53 health-check failover, and fully automated SSM Automation runbook. Pilot light (RTO 4h, RPO 1h) for Tier 2 using AWS Backup, CloudFormation StackSets, and DRS.</div>
+        <div class="card-meta">
+          <div class="card-metric">Tier 1 drill: 13m 55s actual RTO (target 15m)</div>
+          <div class="card-metric">Tier 2 drill: 2h 48m actual RTO (target 4h)</div>
+          <div class="card-metric">DR cost: Tier 1 28%, Tier 2 8% of primary</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">Aurora Global DB</span><span class="svc-chip">DRS</span>
+          <span class="svc-chip">Route 53</span><span class="svc-chip">AWS Backup</span>
+          <span class="svc-chip">SSM Automation</span><span class="svc-chip">CloudFormation</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P7 — App Modernisation — LARGE -->
+      <div class="project-card large reveal">
+        <div class="card-header">
+          <span class="card-num">07</span>
+          <span class="card-badge badge-k8s">EKS Platform</span>
+        </div>
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Cloud-Native Application Modernisation — Enterprise EKS Platform</div>
+        <div class="card-desc">Infrastructure design for refactoring a legacy Java EE monolith into 25 cloud-native microservices across 7 bounded domains on Amazon EKS. Full technology stack: Karpenter, Istio mTLS, ArgoCD GitOps, Argo Rollouts canary, HPA+KEDA, Aurora Global Database, DynamoDB Global Tables, ElastiCache, Neptune, OpenSearch, EventBridge, MSK Kafka, Step Functions, WAF, Shield, GuardDuty, Inspector, Macie, X-Ray, Managed Prometheus, Managed Grafana. Multi-region active-passive. PCI-DSS Level 1.</div>
+        <div class="card-meta">
+          <div class="card-metric">25 microservices · 7 bounded domains · 3 AZs · Multi-region</div>
+          <div class="card-metric">99.99% availability SLA · p95 API ≤ 200ms · 100K RPS</div>
+          <div class="card-metric">Zero-trust: IAM IRSA, Istio mTLS, OPA Gatekeeper, Cosign image signing</div>
+          <div class="card-metric">8 Architecture Decision Records documented</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">EKS</span><span class="svc-chip">Karpenter</span>
+          <span class="svc-chip">Istio</span><span class="svc-chip">ArgoCD</span>
+          <span class="svc-chip">Aurora</span><span class="svc-chip">DynamoDB</span>
+          <span class="svc-chip">EventBridge</span><span class="svc-chip">MSK</span>
+          <span class="svc-chip">WAF</span><span class="svc-chip">GuardDuty</span>
+          <span class="svc-chip">X-Ray</span><span class="svc-chip">Terraform</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+      <!-- P8 — WAF Review -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">08</span>
+          <span class="card-badge badge-aws">WAF Review</span>
+        </div>
+        <div class="card-icon">🔍</div>
+        <div class="card-title">AWS Well-Architected Review — PLM System (PMI)</div>
+        <div class="card-desc">Formal WAF review of the ARAS Innovator PLM system at Philip Morris International. 27 findings across Security, Reliability, Performance, and Cost pillars. Pillar scores raised from 52→81 (Security) and 44→78 (Cost). ~$25,200/year in cost savings delivered.</div>
+        <div class="card-meta">
+          <div class="card-metric">27 findings — 21 fully remediated (78%)</div>
+          <div class="card-metric">$25,200/year cost savings identified</div>
+          <div class="card-metric">200+ security vulnerabilities remediated</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">WAF Tool</span><span class="svc-chip">Security Hub</span>
+          <span class="svc-chip">Cost Explorer</span><span class="svc-chip">Trusted Advisor</span>
+          <span class="svc-chip">CloudWatch</span><span class="svc-chip">Prowler</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro" target="_blank">View on GitHub →</a>
+      </div>
+
+    </div><!-- /projects-grid -->
+  </div>
+</section>
+
+<!-- ── CERTIFICATIONS ─────────────────────────────────────────────── -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">10 Industry<br>Certifications</h2>
+    <p class="section-sub">AWS Professional, Specialty, and Associate certifications — plus HashiCorp Terraform and Certified Kubernetes Administrator.</p>
+
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-level prof">Professional</div>
+        <div class="cert-name">AWS Solutions Architect — Professional</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level prof">Professional</div>
+        <div class="cert-name">AWS DevOps Engineer — Professional</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level spec">Specialty</div>
+        <div class="cert-name">AWS Security — Specialty</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level spec">Specialty</div>
+        <div class="cert-name">AWS Advanced Networking — Specialty</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level spec">Specialty</div>
+        <div class="cert-name">AWS AI Practitioner</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level asso">Associate</div>
+        <div class="cert-name">AWS Solutions Architect — Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level asso">Associate</div>
+        <div class="cert-name">AWS Developer — Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level asso">Associate</div>
+        <div class="cert-name">AWS SysOps Administrator — Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level other">HashiCorp</div>
+        <div class="cert-name">Terraform Associate</div>
+        <div class="cert-issuer">HashiCorp</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-level other">CNCF</div>
+        <div class="cert-name">Certified Kubernetes Administrator (CKA)</div>
+        <div class="cert-issuer">Cloud Native Computing Foundation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">Technical depth</div>
+    <h2 class="section-title">Core Skills</h2>
+    <p class="section-sub">7 years of hands-on AWS expertise across migration tooling, infrastructure automation, security, and container platforms.</p>
+
+    <div class="skills-layout">
+      <div>
+        <div class="skill-group">
+          <div class="skill-group-title">Migration &amp; Modernisation</div>
+          <div class="skill-row">
+            <div class="skill-name">AWS MGN / DMS / DataSync</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:97%;animation-delay:.1s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">CloudFormation / CMF</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:92%;animation-delay:.2s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Landing Zone Design</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:94%;animation-delay:.3s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">6R Migration Strategy</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:96%;animation-delay:.4s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Infrastructure as Code</div>
+          <div class="skill-row">
+            <div class="skill-name">Terraform / Terragrunt</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:95%;animation-delay:.1s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Ansible</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%;animation-delay:.2s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Python / Shell scripting</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:85%;animation-delay:.3s"></div></div>
+            <div class="skill-pct">Advanced</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">GitHub Actions / Jenkins</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:88%;animation-delay:.4s"></div></div>
+            <div class="skill-pct">Advanced</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group">
+          <div class="skill-group-title">Container &amp; Cloud-Native</div>
+          <div class="skill-row">
+            <div class="skill-name">Amazon EKS / Kubernetes</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:88%;animation-delay:.1s"></div></div>
+            <div class="skill-pct">Advanced</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Amazon ECS / Fargate</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%;animation-delay:.2s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">Istio / Service Mesh</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:80%;animation-delay:.3s"></div></div>
+            <div class="skill-pct">Advanced</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">ArgoCD / GitOps</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:82%;animation-delay:.4s"></div></div>
+            <div class="skill-pct">Advanced</div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Security &amp; Networking</div>
+          <div class="skill-row">
+            <div class="skill-name">AWS Security (WAF, GuardDuty…)</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:93%;animation-delay:.1s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">VPC / TGW / PrivateLink</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:95%;animation-delay:.2s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">AWS WAF / Network Firewall</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%;animation-delay:.3s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-name">IBM MQ / IIB / WAS</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:95%;animation-delay:.4s"></div></div>
+            <div class="skill-pct">Expert</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-title">Open to<br>Opportunities</h2>
+        <p>Available for Senior Cloud Architect, AWS Migration Lead, and Cloud Platform Architect roles. Open to permanent, contract, and advisory engagements — India and remote.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="tel:+919826904012">
+            <span class="cl-icon">📱</span>
+            <div class="cl-info">
+              <div class="cl-type">Mobile</div>
+              <div class="cl-value">+91 9826904012</div>
+            </div>
+          </a>
+          <a class="contact-link" href="mailto:vikasjain.mca@gmail.com">
+            <span class="cl-icon">✉️</span>
+            <div class="cl-info">
+              <div class="cl-type">Email</div>
+              <div class="cl-value">vikasjain.mca@gmail.com</div>
+            </div>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/vjain80" target="_blank">
+            <span class="cl-icon">💼</span>
+            <div class="cl-info">
+              <div class="cl-type">LinkedIn</div>
+              <div class="cl-value">linkedin.com/in/vjain80</div>
+            </div>
+          </a>
+          <a class="contact-link" href="https://github.com/vikas-awspro" target="_blank">
+            <span class="cl-icon">⚡</span>
+            <div class="cl-info">
+              <div class="cl-type">GitHub</div>
+              <div class="cl-value">github.com/vjain80</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <h3>Send a message</h3>
+        <p>Interested in discussing a role, engagement, or collaboration? Drop a message.</p>
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about the role or engagement..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="alert('Portfolio is a static page — please reach out via email or LinkedIn.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-left">
+    <span>Vikas Jain</span> · Senior Cloud Architect · Indore, India
+  </div>
+  <div class="footer-right">
+    19+ yrs IT · 7 yrs AWS · 10 certifications · AWS ProServe Partner
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ────────────────────────────────────────────────────── -->
+<script>
+// ── Intersection observer for reveal animations ──────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, (entry.target.dataset.delay || 0) * 1000);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  const sameGroup = el.parentElement;
+  observer.observe(el);
+});
+
+// ── Counter animation ─────────────────────────────────────────────────
+const counters = document.querySelectorAll('[data-target]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.target === '1000' ? '+' : '+';
+      let start = 0;
+      const duration = 1800;
+      const step = target / (duration / 16);
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= target) {
+          el.textContent = target.toLocaleString() + suffix;
+          clearInterval(timer);
+        } else {
+          el.textContent = Math.floor(start).toLocaleString() + (suffix||'');
+        }
+      }, 16);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+counters.forEach(c => counterObserver.observe(c));
+
+// ── Smooth active nav highlight ────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--amber)'
+      : 'var(--text3)';
+  });
+}, { passive: true });
+</script>
+
+</body>
+</html>
