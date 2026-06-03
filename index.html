@@ -208,13 +208,13 @@ nav {
 /* ── STATS BAR ─────────────────────────────────────────────────────── */
 .stats-bar {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(6, 1fr);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--bg2);
 }
 .stat-item {
-  padding: 36px 32px;
+  padding: 30px 20px;
   border-right: 1px solid var(--border);
   opacity: 0; animation: fadeUp .6s ease forwards;
 }
@@ -224,9 +224,10 @@ nav {
 .stat-item:nth-child(3) { animation-delay: .3s; }
 .stat-item:nth-child(4) { animation-delay: .4s; }
 .stat-item:nth-child(5) { animation-delay: .5s; }
+.stat-item:nth-child(6) { animation-delay: .6s; }
 .stat-num {
   font-family: var(--serif);
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 900;
   color: var(--amber);
   line-height: 1;
@@ -453,7 +454,7 @@ section { position: relative; z-index: 1; }
 #certs { background: var(--bg2); }
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 12px;
 }
 .cert-card {
@@ -673,9 +674,10 @@ footer {
   nav { padding: 0 24px; }
   .nav-links { display: none; }
   .hero { padding: 100px 24px 60px; }
-  .stats-bar { grid-template-columns: repeat(3, 1fr); }
-  .stat-item:nth-child(4),
-  .stat-item:nth-child(5) { border-top: 1px solid var(--border); }
+  .stats-bar { grid-template-columns: repeat(4, 1fr); }
+  .stat-item:nth-child(5),
+  .stat-item:nth-child(6),
+  .stat-item:nth-child(7) { border-top: 1px solid var(--border); }
   .section-inner { padding: 60px 24px; }
   .timeline-item { grid-template-columns: 1fr; gap: 16px; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -711,7 +713,7 @@ footer {
   <div class="hero-content">
     <div class="hero-eyebrow">Senior Cloud Architect · AWS ProServe Partner</div>
     <h1 class="hero-name">Vikas Jain</h1>
-    <div class="hero-title">AWS Migration Specialist</div>
+    <div class="hero-title">AWS Cloud Migration Specialist</div>
     <p class="hero-desc">
       <strong>20+ years of IT experience</strong> — 7 years of deep, hands-on AWS expertise.
       Embedded AWS Professional Services partner delivering <strong>large-scale cloud migrations</strong>,
@@ -728,24 +730,28 @@ footer {
 <!-- ── STATS BAR ──────────────────────────────────────────────────── -->
 <div class="stats-bar">
   <div class="stat-item reveal">
-    <div class="stat-num" data-target="1000">0</div>
+    <div class="stat-num" data-target="8">0</div>
+    <div class="stat-label">Enterprise cloud migration engagements</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="3000">0</div>
     <div class="stat-label">Servers migrated to AWS</div>
   </div>
   <div class="stat-item reveal">
     <div class="stat-num" data-target="100">0</div>
-    <div class="stat-label">Databases migrated</div>
+    <div class="stat-label">Databases migrated to AWS</div>
   </div>
   <div class="stat-item reveal">
-    <div class="stat-num" data-target="200">0</div>
-    <div class="stat-label">Security vulnerabilities remediated</div>
+    <div class="stat-num">75<span style="font-size:18px;color:var(--text3)">+ TB</span></div>
+    <div class="stat-label">File data migrated to AWS</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-target="3">0</div>
+    <div class="stat-label">Landing zones launched</div>
   </div>
   <div class="stat-item reveal">
     <div class="stat-num" data-target="10">0</div>
     <div class="stat-label">AWS &amp; cloud certifications</div>
-  </div>
-  <div class="stat-item reveal">
-    <div class="stat-num">2.5<span style="font-size:24px;color:var(--text3)">yr</span></div>
-    <div class="stat-label">Embedded AWS ProServe partner</div>
   </div>
 </div>
 
@@ -835,42 +841,78 @@ footer {
   <div class="section-inner">
     <div class="section-label">Portfolio</div>
     <h2 class="section-title">Showcase<br>Projects</h2>
-    <p class="section-sub">Eight production-grade projects demonstrating AWS architecture, IaC, security, and migration engineering — each with full documentation, architecture diagrams, and working code.</p>
+    <p class="section-sub">Nine production-grade projects demonstrating AWS architecture, IaC, security, and migration engineering — each with full documentation, architecture diagrams, and working code.</p>
 
     <div class="projects-grid">
 
-      <!-- P1 — Landing Zone -->
+<!-- P01 — Landing Zone Terraform Native -->
       <div class="project-card reveal">
         <div class="card-header">
           <span class="card-num">01</span>
           <span class="card-badge badge-tf">Terraform</span>
         </div>
         <div class="card-icon">🏗️</div>
-        <div class="card-title">AWS Landing Zone with CI/CD Deployment Pipeline</div>
-        <div class="card-desc">Production-grade AWS Landing Zone deployed via GitHub Actions CI/CD. Multi-account structure, SCP guardrails, centralised logging, network segmentation — mirrors the foundation stream patterns built during AWS ProServe engagements.</div>
+        <div class="card-title">AWS Landing Zone — Terraform Native</div>
+        <div class="card-desc">Full IaC landing zone without Control Tower dependency — ideal for brownfield migrations where Organisations already exists or Control Tower cannot be adopted. Pure Terraform multi-account foundation: custom SCP pipeline, account baseline modules, VPC factory, Transit Gateway, and GitHub Actions CI/CD. Gives complete control over every resource with no managed service overhead.</div>
         <div class="card-meta">
-          <div class="card-metric">Account Factory + StackSets automation</div>
-          <div class="card-metric">GitHub Actions plan → apply pipeline</div>
-          <div class="card-metric">CIS benchmark conformance pack</div>
+          <div class="card-metric">Pure Terraform — no Control Tower dependency, full resource control</div>
+          <div class="card-metric">Custom SCP pipeline via GitHub Actions — plan on PR, apply on merge</div>
+          <div class="card-metric">Account baseline module — CloudTrail, Config, GuardDuty, Security Hub per account</div>
         </div>
         <div class="card-services">
-          <span class="svc-chip">Control Tower</span>
+          <span class="svc-chip">AWS Organisations</span>
+          <span class="svc-chip">SCPs</span>
+          <span class="svc-chip">Terraform</span>
+          <span class="svc-chip">IAM Identity Center</span>
+          <span class="svc-chip">Transit Gateway</span>
+          <span class="svc-chip">VPC IPAM</span>
+          <span class="svc-chip">GitHub Actions</span>
           <span class="svc-chip">AWS Config</span>
           <span class="svc-chip">Security Hub</span>
-          <span class="svc-chip">Terraform</span>
-          <span class="svc-chip">GitHub Actions</span>
         </div>
         <a class="card-link" href="https://github.com/vikas-awspro/aws-landing-zone" target="_blank">View on GitHub →</a>
       </div>
 
-      <!-- P2 — Terraform Module Library -->
+<!-- P02 — Landing Zone Control Tower AFT -->
       <div class="project-card reveal">
         <div class="card-header">
           <span class="card-num">02</span>
+          <span class="card-badge badge-aws">Control Tower · AFT</span>
+        </div>
+        <div class="card-icon">🏛️</div>
+        <div class="card-title">AWS Landing Zone — Control Tower & AFT</div>
+        <div class="card-desc">Managed governance approach using AWS Control Tower, Account Factory for Terraform (AFT), and GitHub Actions CI/CD — preferred for greenfield cloud programmes where speed and AWS-managed guardrails are the priority. Covers full OU hierarchy (Security, Infrastructure, Workloads, Sandbox OUs), 11 SCP guardrails, centralised immutable logging with S3 Object Lock, Transit Gateway hub-and-spoke, centralised egress via AWS Network Firewall, Route 53 Resolver, VPC IPAM, and OIDC-authenticated daily drift detection.</div>
+        <div class="card-meta">
+          <div class="card-metric">AFT GitOps account vending — PR-based provisioning in &lt; 20 min end-to-end</div>
+          <div class="card-metric">11 mandatory SCPs — region lock, root user deny, CloudTrail protection, IGW deny (Prod OU)</div>
+          <div class="card-metric">Organisation CloudTrail + S3 Object Lock (Compliance mode, 1 year retention)</div>
+          <div class="card-metric">GitHub Actions + OIDC — zero stored credentials · daily drift detection</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">Control Tower</span>
+          <span class="svc-chip">AFT</span>
+          <span class="svc-chip">AWS Organisations</span>
+          <span class="svc-chip">SCPs</span>
+          <span class="svc-chip">IAM Identity Center</span>
+          <span class="svc-chip">Transit Gateway</span>
+          <span class="svc-chip">Network Firewall</span>
+          <span class="svc-chip">VPC IPAM</span>
+          <span class="svc-chip">GuardDuty</span>
+          <span class="svc-chip">Security Hub</span>
+          <span class="svc-chip">GitHub Actions</span>
+          <span class="svc-chip">Terraform</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro/aws-landing-zone-control-tower" target="_blank">View on GitHub →</a>
+      </div>
+
+<!-- P03 — Terraform Module Library -->
+      <div class="project-card reveal">
+        <div class="card-header">
+          <span class="card-num">03</span>
           <span class="card-badge badge-tf">Terraform</span>
         </div>
         <div class="card-icon">📦</div>
-        <div class="card-title">Reusable Terraform AWS Module Library</div>
+        <div class="card-title">AWS Cloud Infrastructure — Reusable Terraform Module Library</div>
         <div class="card-desc">Registry-style Terraform module library following the primitive-and-composite pattern. Primitive modules (EC2, ASG, ALB, Route 53, IAM, SG) assembled into composite workload stacks. Full Terratest coverage and semantic versioning. Mirrors the reusable modules built for product teams at AWS ProServe.</div>
         <div class="card-meta">
           <div class="card-metric">6 primitive + 2 composite modules</div>
@@ -885,36 +927,36 @@ footer {
         <a class="card-link" href="https://github.com/vikas-awspro/terraform-aws-modules" target="_blank">View on GitHub →</a>
       </div>
 
-      <!-- P3 — MGN Wave Orchestrator -->
+<!-- P04 — WAF Review -->
       <div class="project-card reveal">
         <div class="card-header">
-          <span class="card-num">03</span>
-          <span class="card-badge badge-aws">AWS MGN</span>
+          <span class="card-num">04</span>
+          <span class="card-badge badge-aws">WAF Review</span>
         </div>
-        <div class="card-icon">🖥️</div>
-        <div class="card-title">AWS MGN Automated Wave Orchestrator</div>
-        <div class="card-desc">Python/Lambda solution that reads a migration wave plan (CSV), triggers MGN replication, monitors server status, runs pre/post cutover validations, and sends SNS notifications. Simulates the CMF-driven workflow executed at scale — 1,000+ servers migrated in under 9 months.</div>
+        <div class="card-icon">🔍</div>
+        <div class="card-title">AWS Well-Architected Review &amp; Remediation — Enterprise PLM System</div>
+        <div class="card-desc">Formal WAF review of the ARAS Innovator PLM system at Philip Morris International. 27 findings across Security, Reliability, Performance, and Cost pillars. Pillar scores raised from 52→81 (Security) and 44→78 (Cost). ~$25,200/year in cost savings delivered.</div>
         <div class="card-meta">
-          <div class="card-metric">Wave plan ingestion from CSV/S3</div>
-          <div class="card-metric">Automated pre/post cutover validation</div>
-          <div class="card-metric">EventBridge + SNS notification pipeline</div>
+          <div class="card-metric">27 findings — 21 fully remediated (78%)</div>
+          <div class="card-metric">$25,200/year cost savings identified</div>
+          <div class="card-metric">200+ security vulnerabilities remediated</div>
         </div>
         <div class="card-services">
-          <span class="svc-chip">MGN</span><span class="svc-chip">Lambda</span>
-          <span class="svc-chip">EventBridge</span><span class="svc-chip">SNS</span>
-          <span class="svc-chip">Python</span><span class="svc-chip">CMF</span>
+          <span class="svc-chip">WAF Tool</span><span class="svc-chip">Security Hub</span>
+          <span class="svc-chip">Cost Explorer</span><span class="svc-chip">Trusted Advisor</span>
+          <span class="svc-chip">CloudWatch</span><span class="svc-chip">Prowler</span>
         </div>
-        <a class="card-link" href="https://github.com/vikas-awspro/aws-rehost-migration-tools" target="_blank">View on GitHub →</a>
+        <a class="card-link" href="https://github.com/vikas-awspro/aws-waf-review-remediation" target="_blank">View on GitHub →</a>
       </div>
 
-      <!-- P4 — Security Auto-Remediation — LARGE -->
+<!-- P05 — Security Auto-Remediation — LARGE -->
       <div class="project-card large reveal">
         <div class="card-header">
-          <span class="card-num">04</span>
+          <span class="card-num">05</span>
           <span class="card-badge badge-sec">Security</span>
         </div>
         <div class="card-icon">🛡️</div>
-        <div class="card-title">AWS Security Posture Auto-Remediation System</div>
+        <div class="card-title">AWS Cloud Security — Automated Posture & Remediation Engine</div>
         <div class="card-desc">AWS Config rules + Lambda auto-remediation for 40 CIS AWS Benchmark v1.4 findings across 8 services (EC2, EBS, S3, ALB, RDS, Route 53, VPC, IAM). CloudWatch dashboard with posture score trending over time. Reflects 200+ vulnerability remediations executed at Philip Morris International. Each Lambda follows a detect → remediate → re-evaluate → audit → alert pattern. Fully automated for CRITICAL findings; SNS escalation for findings requiring human review.</div>
         <div class="card-meta">
           <div class="card-metric">40 CIS v1.4 rules across 8 AWS services</div>
@@ -932,36 +974,14 @@ footer {
         <a class="card-link" href="https://github.com/vikas-awspro/aws-security-auto-remediation" target="_blank">View on GitHub →</a>
       </div>
 
-      <!-- P5 — DMS Pipeline -->
-      <div class="project-card reveal" id="dms-project" style="border:1px solid rgba(245,158,11,0.35);">
-        <div class="card-header">
-          <span class="card-num">05</span>
-          <div style="display:flex;gap:8px;align-items:center;"><span class="card-badge badge-aws">AWS DMS</span><span style="font-family:var(--mono);font-size:9px;background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.4);padding:2px 8px;border-radius:10px;letter-spacing:.08em;">● LIVE REPO</span></div>
-        </div>
-        <div class="card-icon">🗄️</div>
-        <div class="card-title">Database Migration Pipeline — Oracle & MySQL to Aurora</div>
-        <div class="card-desc">End-to-end DMS pipeline: Terraform-provisioned replication instance, SCT schema conversion (Oracle → Aurora PostgreSQL), ongoing CDC replication with sub-30s lag, validation suite, and cutover runbook. Demo dataset included — full flow runnable from scratch in under 4 hours.</div>
-        <div class="card-meta">
-          <div class="card-metric">2.8TB Oracle + 420GB MySQL migrated</div>
-          <div class="card-metric">Zero data loss — full validation suite</div>
-          <div class="card-metric">Cutover runbook: Excel tracker + diagram</div>
-        </div>
-        <div class="card-services">
-          <span class="svc-chip">DMS</span><span class="svc-chip">SCT</span>
-          <span class="svc-chip">Aurora PG</span><span class="svc-chip">Aurora MySQL</span>
-          <span class="svc-chip">Terraform</span><span class="svc-chip">CloudWatch</span>
-        </div>
-        <a class="card-link" href="https://github.com/vikas-awspro/enterprise-db-migration-aws" target="_blank">View on GitHub →</a>
-      </div>
-
-      <!-- P6 — DR Architecture -->
+<!-- P06 — DR Architecture -->
       <div class="project-card reveal">
         <div class="card-header">
           <span class="card-num">06</span>
           <span class="card-badge badge-dr">Disaster Recovery</span>
         </div>
         <div class="card-icon">🔁</div>
-        <div class="card-title">Cloud-Native Disaster Recovery — Tier 1 & Tier 2</div>
+        <div class="card-title">AWS Disaster Recovery Patterns — Active/Active, Warm Standby & Pilot Light</div>
         <div class="card-desc">Warm standby (RTO 15 min, RPO 1 min) for Tier 1 apps using Aurora Global DB, AWS DRS, ECS Fargate warm standby, Route 53 health-check failover, and fully automated SSM Automation runbook. Pilot light (RTO 4h, RPO 1h) for Tier 2 using AWS Backup, CloudFormation StackSets, and DRS.</div>
         <div class="card-meta">
           <div class="card-metric">Tier 1 drill: 13m 55s actual RTO (target 15m)</div>
@@ -976,14 +996,58 @@ footer {
         <a class="card-link" href="https://github.com/vikas-awspro/aws-disaster-recovery-patterns" target="_blank">View on GitHub →</a>
       </div>
 
-      <!-- P7 — App Modernisation — LARGE -->
-      <div class="project-card large reveal">
+<!-- P07 — MGN Wave Orchestrator -->
+      <div class="project-card reveal">
         <div class="card-header">
           <span class="card-num">07</span>
+          <span class="card-badge badge-aws">AWS MGN</span>
+        </div>
+        <div class="card-icon">🖥️</div>
+        <div class="card-title">AWS Cloud Migration — Lift-and-Shift (Rehost) Automation for 1000+ Servers</div>
+        <div class="card-desc">Python/Lambda solution that reads a migration wave plan (CSV), triggers MGN replication, monitors server status, runs pre/post cutover validations, and sends SNS notifications. Simulates the CMF-driven workflow executed at scale — 1,000+ servers migrated in under 9 months.</div>
+        <div class="card-meta">
+          <div class="card-metric">Wave plan ingestion from CSV/S3</div>
+          <div class="card-metric">Automated pre/post cutover validation</div>
+          <div class="card-metric">EventBridge + SNS notification pipeline</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">MGN</span><span class="svc-chip">Lambda</span>
+          <span class="svc-chip">EventBridge</span><span class="svc-chip">SNS</span>
+          <span class="svc-chip">Python</span><span class="svc-chip">CMF</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro/aws-rehost-migration-tools" target="_blank">View on GitHub →</a>
+      </div>
+
+<!-- P08 — DMS Pipeline -->
+      <div class="project-card reveal" id="dms-project" style="border:1px solid rgba(245,158,11,0.35);">
+        <div class="card-header">
+          <span class="card-num">08</span>
+          <div style="display:flex;gap:8px;align-items:center;"><span class="card-badge badge-aws">AWS DMS</span><span style="font-family:var(--mono);font-size:9px;background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.4);padding:2px 8px;border-radius:10px;letter-spacing:.08em;">● LIVE REPO</span></div>
+        </div>
+        <div class="card-icon">🗄️</div>
+        <div class="card-title">AWS Cloud Database Migration — Oracle & MySQL to Aurora RDS</div>
+        <div class="card-desc">End-to-end DMS pipeline: Terraform-provisioned replication instance, SCT schema conversion (Oracle → Aurora PostgreSQL), ongoing CDC replication with sub-30s lag, validation suite, and cutover runbook. Demo dataset included — full flow runnable from scratch in under 4 hours.</div>
+        <div class="card-meta">
+          <div class="card-metric">2.8TB Oracle + 420GB MySQL migrated</div>
+          <div class="card-metric">Zero data loss — full validation suite</div>
+          <div class="card-metric">Cutover runbook: Excel tracker + diagram</div>
+        </div>
+        <div class="card-services">
+          <span class="svc-chip">DMS</span><span class="svc-chip">SCT</span>
+          <span class="svc-chip">Aurora PG</span><span class="svc-chip">Aurora MySQL</span>
+          <span class="svc-chip">Terraform</span><span class="svc-chip">CloudWatch</span>
+        </div>
+        <a class="card-link" href="https://github.com/vikas-awspro/enterprise-db-migration-aws" target="_blank">View on GitHub →</a>
+      </div>
+
+<!-- P09 — LARGE -->
+      <div class="project-card large reveal">
+        <div class="card-header">
+          <span class="card-num">09</span>
           <span class="card-badge badge-k8s">EKS Platform</span>
         </div>
         <div class="card-icon">⚡</div>
-        <div class="card-title">Cloud-Native Application Modernisation — Enterprise EKS Platform</div>
+        <div class="card-title">AWS Cloud Application Modernisation — Legacy Monolith to EKS Microservices</div>
         <div class="card-desc">Infrastructure design for refactoring a legacy Java EE monolith into 25 cloud-native microservices across 7 bounded domains on Amazon EKS. Full technology stack: Karpenter, Istio mTLS, ArgoCD GitOps, Argo Rollouts canary, HPA+KEDA, Aurora Global Database, DynamoDB Global Tables, ElastiCache, Neptune, OpenSearch, EventBridge, MSK Kafka, Step Functions, WAF, Shield, GuardDuty, Inspector, Macie, X-Ray, Managed Prometheus, Managed Grafana. Multi-region active-passive. PCI-DSS Level 1.</div>
         <div class="card-meta">
           <div class="card-metric">25 microservices · 7 bounded domains · 3 AZs · Multi-region</div>
@@ -1000,28 +1064,6 @@ footer {
           <span class="svc-chip">X-Ray</span><span class="svc-chip">Terraform</span>
         </div>
         <a class="card-link" href="https://github.com/vikas-awspro/aws-eks-modernization-platform" target="_blank">View on GitHub →</a>
-      </div>
-
-      <!-- P8 — WAF Review -->
-      <div class="project-card reveal">
-        <div class="card-header">
-          <span class="card-num">08</span>
-          <span class="card-badge badge-aws">WAF Review</span>
-        </div>
-        <div class="card-icon">🔍</div>
-        <div class="card-title">AWS Well-Architected Review — PLM System (PMI)</div>
-        <div class="card-desc">Formal WAF review of the ARAS Innovator PLM system at Philip Morris International. 27 findings across Security, Reliability, Performance, and Cost pillars. Pillar scores raised from 52→81 (Security) and 44→78 (Cost). ~$25,200/year in cost savings delivered.</div>
-        <div class="card-meta">
-          <div class="card-metric">27 findings — 21 fully remediated (78%)</div>
-          <div class="card-metric">$25,200/year cost savings identified</div>
-          <div class="card-metric">200+ security vulnerabilities remediated</div>
-        </div>
-        <div class="card-services">
-          <span class="svc-chip">WAF Tool</span><span class="svc-chip">Security Hub</span>
-          <span class="svc-chip">Cost Explorer</span><span class="svc-chip">Trusted Advisor</span>
-          <span class="svc-chip">CloudWatch</span><span class="svc-chip">Prowler</span>
-        </div>
-        <a class="card-link" href="https://github.com/vikas-awspro/aws-waf-review-remediation" target="_blank">View on GitHub →</a>
       </div>
 
     </div><!-- /projects-grid -->
